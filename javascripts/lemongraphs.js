@@ -1,29 +1,11 @@
 console.log('lemongraphs.js ran');
 
-
 var GRAPH_HEIGHT = 300;
 var GRAPH_WIDTH = 600;
 
 
-function drawLabel(x, y, text) {
-	var label = jsglGod.createLabel();
-	label.setX(x);
-	label.setY(y);
-	label.setText(text);
-	jsglGod.addElement(label);
-}
-
 function drawAxis(isX, width, height) {
-	drawLine(0, height, isX ? width : 0, isX ? height : 0 , "rgba(0, 0, 0, 0.5)", 5);
-}
-
-function drawLine(x, y, x2, y2, color, lineWidth) {
-	var polygon = jsglGod.createPolygon();
-	polygon.addPointXY(x,y);
-	polygon.addPointXY(x2,y2);
-	polygon.getStroke().setWeight(lineWidth);
-	polygon.getStroke().setColor(color);
-	jsglGod.addElement(polygon);
+	TDW.drawLine(0, height, isX ? width : 0, isX ? height : 0 , "rgba(0, 0, 0, 0.5)", 5);
 }
 
 function drawGrid(xCount, yCount) {
@@ -36,10 +18,10 @@ function drawGrid(xCount, yCount) {
 	console.log(yStep);
 	
 	for(var x = 0; x < xCount; x++) {
-		drawLine(xStep*x, 0, xStep*x, GRAPH_HEIGHT, lineColor, 1);
+		TDW.drawLine(xStep*x, 0, xStep*x, GRAPH_HEIGHT, lineColor, 1);
 	}
 	for(var y = 0; y < yCount; y++) {
-		drawLine(0, yStep*y, GRAPH_WIDTH, yStep*y, lineColor, 1);
+		TDW.drawLine(0, yStep*y, GRAPH_WIDTH, yStep*y, lineColor, 1);
 	}
 }
 
@@ -49,15 +31,6 @@ function drawXAxis() {
 
 function drawYAxis() {
 	drawAxis(true, GRAPH_WIDTH, GRAPH_HEIGHT);
-}
-
-function plotBlob(x, y, radius) {
-	var circle = jsglGod.createCircle();
-	circle.setCenterLocationXY(x,y);
-	circle.setRadius(radius);
-	circle.getStroke().setWeight(5);
-	circle.getStroke().setColor("rgb(255,0,0)");
-	jsglGod.addElement(circle);
 }
 
 function plotDummyData() {
@@ -89,19 +62,20 @@ function plotDummyData() {
 		var x = plottedBlobs[count].x;
 		var y = plottedBlobs[count].y;
 		
-		plotBlob(x, y, 10*Math.random());
+		drawCircle(x, y, 10*Math.random());
 	}
 	
-	drawLabel(10, 20, "Jason");
-	drawLabel(10, 50, "WOOP WOOP");
+	TDW.drawLabel(10, 20, "Jason");
+	TDW.drawLabel(10, 50, "WOOP WOOP");
 }
 
 // Make an instance of two and place it on the page.
 
+console.log('lemongraph init');
 //var elem = document.getElementById('draw-shapes').children[0];
-var jsglGod = new jsgl.Panel(document.getElementById("draw-shapes"));
+TDW.init('draw-shapes');
 
-console.log(jsglGod);
+console.log(TDW);
 
 // var params = { width: GRAPH_WIDTH, height: GRAPH_HEIGHT };
 // var two = new Two(params).appendTo(elem);
