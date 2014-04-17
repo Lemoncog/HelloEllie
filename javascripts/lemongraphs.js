@@ -2,7 +2,7 @@ console.log('lemongraphs.js ran');
 
 
 var GRAPH_HEIGHT = 300;
-var GRAPH_WIDTH = 300;
+var GRAPH_WIDTH = 600;
 
 function drawAxis(isX, width, height) {
 	drawLine(0, height, isX ? width : 0, isX ? height : 0 , "rgba(0, 0, 0, 0.5)", 5);
