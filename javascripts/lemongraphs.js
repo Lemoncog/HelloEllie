@@ -4,14 +4,26 @@ console.log('lemongraphs.js ran');
 var GRAPH_HEIGHT = 300;
 var GRAPH_WIDTH = 600;
 
+
+function drawLabel(x, y, text) {
+	var label = jsglGod.createLabel();
+	label.setX(x);
+	label.setY(y);
+	label.setText(text);
+	jsglGod.addElement(label);
+}
+
 function drawAxis(isX, width, height) {
 	drawLine(0, height, isX ? width : 0, isX ? height : 0 , "rgba(0, 0, 0, 0.5)", 5);
 }
 
 function drawLine(x, y, x2, y2, color, lineWidth) {
-	var line = two.makeLine(x, y, x2, y2);
-	line.linewidth = lineWidth;
-	line.stroke = color;
+	var polygon = jsglGod.createPolygon();
+	polygon.addPointXY(x,y);
+	polygon.addPointXY(x2,y2);
+	polygon.getStroke().setWeight(lineWidth);
+	polygon.getStroke().setColor(color);
+	jsglGod.addElement(polygon);
 }
 
 function drawGrid(xCount, yCount) {
@@ -40,10 +52,12 @@ function drawYAxis() {
 }
 
 function plotBlob(x, y, radius) {
-	var circle = two.makeCircle(x, y, radius);
-	circle.fill = '#FF8000';
-	circle.stroke = 'orangered'; // Accepts all valid css color
-	circle.linewidth = 5;
+	var circle = jsglGod.createCircle();
+	circle.setCenterLocationXY(x,y);
+	circle.setRadius(radius);
+	circle.getStroke().setWeight(5);
+	circle.getStroke().setColor("rgb(255,0,0)");
+	jsglGod.addElement(circle);
 }
 
 function plotDummyData() {
@@ -77,34 +91,22 @@ function plotDummyData() {
 		
 		plotBlob(x, y, 10*Math.random());
 	}
+	
+	drawLabel(10, 20, "Jason");
+	drawLabel(10, 50, "WOOP WOOP");
 }
 
 // Make an instance of two and place it on the page.
 
-var elem = document.getElementById('draw-shapes').children[0];
+//var elem = document.getElementById('draw-shapes').children[0];
+var jsglGod = new jsgl.Panel(document.getElementById("draw-shapes"));
 
-console.log(elem);
+console.log(jsglGod);
 
-var params = { width: GRAPH_WIDTH, height: GRAPH_HEIGHT };
-var two = new Two(params).appendTo(elem);
+// var params = { width: GRAPH_WIDTH, height: GRAPH_HEIGHT };
+// var two = new Two(params).appendTo(elem);
 
 drawXAxis();
 drawYAxis();
 drawGrid(10,10);
 plotDummyData();
-
-var circle = two.makeCircle(72, 100, 50);
-var rect = two.makeRectangle(213, 100, 100, 100);
-
-// The object returned has many stylable properties:
-circle.fill = '#FF8000';
-circle.stroke = 'orangered'; // Accepts all valid css color
-circle.linewidth = 5;
-
-rect.fill = 'rgb(0, 200, 255)';
-rect.opacity = 0.75;
-rect.noStroke();
-
-// Don't forget to tell two to render everything
-// to the screen
-two.update();
