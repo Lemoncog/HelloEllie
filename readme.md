@@ -1,2 +1,3 @@
 Graph playground:
-lemoncog.github.io/HelloEllie/graphs
+<p></p>
+<a href="lemoncog.github.io/HelloEllie/graphs">Playground</a>
