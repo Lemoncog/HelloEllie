@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link href="stylesheets/nv.d3.css" rel="stylesheet" type="text/css">
+<style>
+	.barChart div {
+		background-color: steelblue;
+		height : 20px;
+		padding: 3px;
+		margin: 1px;
+		color: white;
+	}
+	
+	.barChart text {
+		font: 10px sans-serif;
+		color: white;
+		text-align: right;
+	}
+</style>
+<script type="text/JavaScript" src="javascripts/jquery.js"></script>
+<script src="javascripts/jquery-1.11.0.js"></script>
+<script src="javascripts/jsgl.js"></script>
+<script src="javascripts/d3.js"></script>
+<script>
+	$(document).ready(function() {
+		// executes when HTML-Document is loaded and DOM is ready
+		$.getJSON("examples/dataExample.json", function(data) {
+
+			var jsonData = data;
+
+			console.log("jsonData " + jsonData);
+
+			var graphData = jsonData.commits;
+			var insertionsOnly = jsonObjectToArray(graphData, "insertions");
+
+			console.log("graphData " + graphData);
+			console.log("graphData[0].insertions " + graphData[0].insertions);
+			
+			console.log("insertionsOnly " + insertionsOnly);
+
+			var normaliseX = d3.scale.linear().domain([0, d3.max(insertionsOnly)]).range([0, 420]);
+
+			var chart = d3.select(".barChart");
+			var bar = chart.selectAll("div");
+			var barUpdate = bar.data(graphData);
+			var barEnter = barUpdate.enter().append("div");
+			barEnter.style("width", function(d) {
+				return normaliseX(d.insertions) + "px";
+			});
+			barEnter.text(function(d) {
+				return d.insertions;
+			});
+
+		});
+	});
+
+	function jsonObjectToArray(jsonObjectArray, key) {
+		var jsonArray = [];
+
+		for (var i = 0; i < jsonObjectArray.length; i++) {
+			jsonArray.push(jsonObjectArray[i][key]);
+		};
+
+		return jsonArray;
+	};
+</script>
+
+<body class='with-3d-shadow with-transitions'>
+
+	<h2>Test1</h2>
+	<div id="test1" class="barChart"></div>
