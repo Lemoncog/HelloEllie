@@ -1,0 +1,1 @@
+﻿git log --numstat --pretty="%an \"%ad\" %H" | awk '{if (NF==3) {printf("%d,%d\n", $1, $2)} else if (length) { {split($0, a, "\"")} {printf("COMMIT\n%s,%s,%s\n", $1, a[2], a[3])}}}' > gitLog.raw
