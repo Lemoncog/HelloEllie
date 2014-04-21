@@ -1,14 +1,10 @@
 define(function(learningGraphHor) {
 	return {
-		generateGraph : function(d3) {
-			console.log("learningGraphHor.js ran");
-
-			$.getJSON("data/commitLog.json", function(data) {
-				mainHor(data);
-			});
-
-			function mainHor(data) {
-
+		costomiseMappings: function(xAxisKey, yAxisKey) {
+			this.xAxisKey = xAxisKey;
+			this.yAxisKey = yAxisKey;
+		},
+		generateGraph : function(d3, data) {
 				var GRAPH_HEIGHT = 200;
 				var BAR_WIDTH = 30;
 
@@ -62,18 +58,16 @@ define(function(learningGraphHor) {
 				}).attr("dy", ".35em").text(function(d) {
 					return d.insertions;
 				});
-			};
-
-			function jsonObjectToArray(jsonObjectArray, key) {
-				var jsonArray = [];
-
-				for (var i = 0; i < jsonObjectArray.length; i++) {
-					jsonArray.push(jsonObjectArray[i][key]);
-				};
-
-				return jsonArray;
-			};
-
+			}
 		}
-	};
+		
+		var jsonObjectToArray = function(jsonObjectArray, key) {
+			var jsonArray = [];
+
+			for (var i = 0; i < jsonObjectArray.length; i++) {
+				jsonArray.push(jsonObjectArray[i][key]);
+			};
+
+			return jsonArray;
+		}
 }); 
