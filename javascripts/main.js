@@ -9,8 +9,8 @@ graphApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/graphVert', {
-        templateUrl: 'partials/graphVert.html',
-        controller: 'GraphVertController'
+        templateUrl: 'partials/graphs.html',
+        controller: 'vertGraphCtrl'
       }).
       otherwise({
         redirectTo: '/'
