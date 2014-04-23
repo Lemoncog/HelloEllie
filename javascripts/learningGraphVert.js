@@ -8,7 +8,8 @@ define(function(learningGraphHor) {
 		this.costomiseMappings = function(xKey, yKey) {
 			xAxisKey = xKey;
 			yAxisKey = yKey;
-
+			
+			
 			console.log('xAxisKey + yAxisKey ' + xAxisKey + yAxisKey);
 		};
 
@@ -26,7 +27,6 @@ define(function(learningGraphHor) {
 			var graphData = jsonData.commits;
 			
 			//This means in this function, can't access xAxisKey as its scope is not this function!
-			console.log('this.xAxisKey + this.yAxisKey ' + this.xAxisKey + this.yAxisKey);
 			console.log('xAxisKey + yAxisKey ' + xAxisKey + yAxisKey);
 
 			var maxChanges = d3.max(graphData, function(d, index) {

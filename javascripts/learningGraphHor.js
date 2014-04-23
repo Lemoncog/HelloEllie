@@ -59,7 +59,7 @@ define(function(learningGraphHor) {
 					return d.insertions;
 				});
 			}
-		}
+		};
 		
 		var jsonObjectToArray = function(jsonObjectArray, key) {
 			var jsonArray = [];
@@ -69,5 +69,5 @@ define(function(learningGraphHor) {
 			};
 
 			return jsonArray;
-		}
+		};
 }); 
