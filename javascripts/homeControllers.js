@@ -2,47 +2,41 @@ console.log("homeControllers.js start");
 
 var graphApp = angular.module('homeControllers', []);
 
-//Set up our graphing dependencies
-graphApp.factory('learningGraphVert', function() {
-	console.log("Providing new graphVert()");
-	return new LearningGraphVert();
-});
-
 graphApp.controller('GreetingCtrl', function($scope) {
 	$scope.greeting = "Hello Greetings";
 });
 
-graphApp.controller('HeaderCtrl', function($scope, $location) {
-	$scope.headers = [ { 'title' : 'GraphA', 'link' : "graphVert" }, { 'title' : 'GraphB', 'link' : "graphHor" } ];
+graphApp.controller('HeaderCtrl', function($scope, $location, $http) {
+	$http.get('data/graphs.json').success(function(data) {
+		$scope.headers = data;	
+	});
 });
 
 
-graphApp.controller('vertGraphCtrl', ['$scope', '$http', 'learningGraphVert',
-	function($scope, $http, learningGraphVert) {
+graphApp.controller('vertGraphCtrl', ['$scope', '$http',
+	function($scope, $http) {
 		$http.get('data/commitLog.json').success(function(data) {
-			$scope.graphData = data;
-
+			var learningGraphVert = new LearningGraphVert();
 			console.log("learningGraphVert=" + learningGraphVert);
  
  			learningGraphVert.costomiseMappings('filesChanged', 'insertions');
     		learningGraphVert.generateGraph(d3, data);
 			
-			console.log('$scope.graphData=' + $scope.graphData);
+			console.log('data=' + data);
 			console.log('$scope=' + $scope);
 		});
 }]);
 
-graphApp.controller('horGraphCtrl', ['$scope', '$http', 'learningGraphVert',
-	function($scope, $http, learningGraphHor) {
+graphApp.controller('horGraphCtrl', ['$scope', '$http',
+	function($scope, $http) {
 		$http.get('data/commitLog.json').success(function(data) {
-			$scope.graphData = data;
-
-			console.log("learningGraphVert=" + learningGraphVert);
+			var learningGraphHor = new LearningGraphHor();
+			console.log("learningGraphHor=" + learningGraphHor);
  
  			learningGraphHor.costomiseMappings('filesChanged', 'insertions');
     		learningGraphHor.generateGraph(d3, data);
 			
-			console.log('$scope.graphData=' + $scope.graphData);
+			console.log('data=' + data);
 			console.log('$scope=' + $scope);
 		});
 }]);

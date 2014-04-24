@@ -43,7 +43,7 @@ var LearningGraphVert = function() {
 
 		console.log(normaliseX);
 
-		var chart = d3.select(".barChartVert");
+		var chart = d3.select(".graphPlaceholder");
 		chart.attr("width", GRAPH_WIDTH);
 		chart.attr("height", BAR_HEIGHT * graphData.length);
 
