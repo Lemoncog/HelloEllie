@@ -29,11 +29,11 @@ graphApp.controller('vertGraphCtrl', ['$scope', '$http',
 
 graphApp.controller('horGraphCtrl', ['$scope', '$http',
 	function($scope, $http) {
-		$http.get('data/commitLog.json').success(function(data) {
+		$http.get('data/testData.json').success(function(data) {
 			var learningGraphHor = new LearningGraphHor();
 			console.log("learningGraphHor=" + learningGraphHor);
  
- 			learningGraphHor.costomiseMappings('filesChanged', 'insertions');
+ 			learningGraphHor.costomiseMappings('title', 'testVal');
     		learningGraphHor.generateGraph(d3, data);
 			
 			console.log('data=' + data);

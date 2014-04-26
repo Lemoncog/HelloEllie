@@ -1,17 +1,25 @@
 <div class="container-fluid">
 	<meta charset="utf-8">
 	<style>
-		.graphPlaceholder rect {
+		.bar {
 			fill: steelblue;
+		}	
+		.bar:hover {
+			fill: brown;
+		}	
+		.axis text {
+			font: 10px sans-serif;
+			fill: black;
 		}
-	
-		.graphPlaceholder text {
-			font: 12px sans-serif;
-			fill: white;
-			text-anchor: end;
+		
+		.axis path,
+		.axis line {
+			fill: none;
+			stroke: #000;
+			shape-rendering: crispEdges;
 		}
 	</style>	
-	<body class='with-3d-shadow with-transitions'>
+	<body>
 	
 		<h2>Test1</h2>
 		<svg class="graphPlaceholder"></svg>	
