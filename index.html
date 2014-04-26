@@ -13,6 +13,7 @@
 		<script src="javascripts/d3.js"></script>
 		<script src="javascripts/graphing/learningGraphVert.js"></script>
 		<script src="javascripts/graphing/learningGraphHor.js"></script>
+		<script src="javascripts/graphing/blobGraph.js"></script>
 		<script src="javascripts/main.js"></script>
 		<script src="javascripts/homeControllers.js"></script>
 	</head>
@@ -26,7 +27,7 @@
  
 		 <div class="collapse navbar-collapse" ng-controller="HeaderCtrl">
 		    <ul class="nav navbar-nav">
-		        <li ng-repeat="header in headers"><a href="#/{{header.link}}">{{header.title}}</a></li>
+		        <li ng-repeat="header in headers"><a href="#/{{header.link}}">{{header.title}}</a></li>
 		    </ul>
 		</div>
 		<div ng-view></div>

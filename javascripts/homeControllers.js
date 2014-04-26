@@ -12,18 +12,25 @@ graphApp.controller('HeaderCtrl', function($scope, $location, $http) {
 	});
 });
 
+graphApp.controller('blobGraphCtrl', ['$scope', '$http',
+	function($scope, $http) {
+		$http.get('data/testData.json').success(function(data) {
+			var blobGraph = new BlobGraph();
+ 
+ 			blobGraph.costomiseMappings('title', 'testVal');
+    		blobGraph.generateGraph(d3, data);
+		});
+}]);
+
+
 
 graphApp.controller('vertGraphCtrl', ['$scope', '$http',
 	function($scope, $http) {
 		$http.get('data/commitLog.json').success(function(data) {
 			var learningGraphVert = new LearningGraphVert();
-			console.log("learningGraphVert=" + learningGraphVert);
  
  			learningGraphVert.costomiseMappings('filesChanged', 'insertions');
     		learningGraphVert.generateGraph(d3, data);
-			
-			console.log('data=' + data);
-			console.log('$scope=' + $scope);
 		});
 }]);
 
@@ -31,13 +38,9 @@ graphApp.controller('horGraphCtrl', ['$scope', '$http',
 	function($scope, $http) {
 		$http.get('data/testData.json').success(function(data) {
 			var learningGraphHor = new LearningGraphHor();
-			console.log("learningGraphHor=" + learningGraphHor);
  
  			learningGraphHor.costomiseMappings('title', 'testVal');
     		learningGraphHor.generateGraph(d3, data);
-			
-			console.log('data=' + data);
-			console.log('$scope=' + $scope);
 		});
 }]);
 

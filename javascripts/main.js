@@ -8,6 +8,10 @@ var graphApp = angular.module('GraphApp', [
 graphApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
+    	when('/blobGraph', {
+        templateUrl: 'partials/graphs.html',
+        controller: 'blobGraphCtrl'
+      }).
       when('/graphVert', {
         templateUrl: 'partials/graphs.html',
         controller: 'vertGraphCtrl'
@@ -17,7 +21,7 @@ graphApp.config(['$routeProvider',
         controller: 'horGraphCtrl'
       }).
       otherwise({
-        redirectTo: '/'
+        redirectTo: '/blobGraph'
       });
   }]);
 
