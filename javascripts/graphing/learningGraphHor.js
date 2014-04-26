@@ -11,7 +11,7 @@ var LearningGraphHor = function() {
 	};
 
 	this.generateGraph = function(d3, data) {
-		var GRAPH_HEIGHT = 200;
+		var GRAPH_HEIGHT = 500;
 		var BAR_WIDTH = 30;
 
 		var jsonData = data;
@@ -53,13 +53,13 @@ var LearningGraphHor = function() {
 		});
 
 		barEnter.append("rect").attr("y", function(d) {
-			return normaliseY(d.insertions);
-		}).attr("width", BAR_WIDTH - 1).attr("height", function(d) {
 			return GRAPH_HEIGHT - normaliseY(d.insertions);
+		}).attr("width", BAR_WIDTH - 1).attr("height", function(d) {
+			return normaliseY(d.insertions);
 		});
 
 		barEnter.append("text").attr("x", BAR_WIDTH / 2).attr("y", function(d) {
-			return normaliseY(d.insertions) + 5;
+			return GRAPH_HEIGHT - normaliseY(d.insertions) + 5;
 		}).attr("dy", ".35em").text(function(d) {
 			return d.insertions;
 		});
