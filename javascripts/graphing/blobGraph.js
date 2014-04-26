@@ -64,19 +64,19 @@ var BlobGraph = function() {
       	.style("text-anchor", "end")
       	.text("Frequency");
     	    		
-		var barEnter = chart.selectAll(".bar")
+		var barEnter = chart.selectAll(".circles")
 		.data(graphData)
-		.enter().append("rect")
+		.enter().append("circle")
 		.attr("class", "bar")
-		.attr("x", function(d) {
+		.attr("cx", function(d) {
 			return normaliseX(d[xAxisKey]);
 		})
-		.attr("y", function(d) {
+		.attr("cy", function(d) {
 			return normaliseY(d[yAxisKey]);
 		})
 		.attr("width", normaliseX.rangeBand() )
-		.attr("height", function(d) {
-			return GRAPH_HEIGHT - normaliseY(d[yAxisKey]);
+		.attr("r", function(d) {
+			return normaliseY(d[yAxisKey])*0.1;
 		});
 	};
 
