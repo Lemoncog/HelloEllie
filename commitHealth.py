@@ -88,7 +88,7 @@ def findMax(commits):
 	for commit in commits:
 		commitHealth = commit["insertions"] + commit["deletions"] + commit["filesChanged"]
 
-		if commitHealth > 1000:
+		if commitHealth > 500:
 			isSpike = True
 
 		if commitHealth > max and isSpike != True:
@@ -125,7 +125,7 @@ def buildGraphData(root):
 		mergedHealth = commit["insertions"] + commit["deletions"] + commit["filesChanged"]
 		author = commit["author"]
 		date = commit["date"]
-		description = "Insertions: {}\nDeletions: {}\nFiles Changed: {}".format(commit["insertions"], commit["deletions"], commit["filesChanged"])
+		description = commit["message"]
 
 		commitHealth = 1-(float(mergedHealth)/float(maxCommit))# * 10.0
 		commitNo+=1
