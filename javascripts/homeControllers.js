@@ -14,9 +14,14 @@ graphApp.controller('HeaderCtrl', function($scope, $location, $http) {
 
 graphApp.controller('blobGraphCtrl', ['$scope', '$http',
 	function($scope, $http) {
-		$scope.update = function() {
-			console.log("You clicked update");
-		}
+		// $scope.update = function(url) {
+			// console.log("You clicked update: " + url);
+// 			
+			// $http.get(url).success(function(data) {
+				// var blobGraph = new BlobGraph();
+    			// blobGraph.generateGraph(d3, data);
+		// });
+		// };
 		
 		$http.get('data/graphData.json').success(function(data) {
 			var blobGraph = new BlobGraph();
