@@ -2,7 +2,31 @@ console.log("BlobGraph ran");
 
 var BlobGraph = function() {
 	this.generateGraph = function(d3, data) {
+		var splitGraph = function(graphData) {
+			healthyCommits = [];
+			badCommits = [];
+			
+			for(index = 0; index < graphData.length; index++) {
+				commit = graphData[index];
+				
+				circleScl = 1-commit.circle.scl;
+				
+				if(circleScl > 1)
+				{
+					badCommits.push(commit);
+				}else
+				{
+					healthyCommits.push(commit);
+				}
+			}
+			
+			console.log("finished splitting");
+			
+			return [ healthyCommits, badCommits ];
+		};
+		
 		var graphData = data;
+		var splitGraphData = splitGraph(graphData);
 		
 		var MARGIN = { top : 20, right : 30, bottom : 30, left: 40};
 		var GRAPH_HEIGHT = 500 - MARGIN.top - MARGIN.bottom;
@@ -10,7 +34,7 @@ var BlobGraph = function() {
 		
 		var normaliseX = d3.scale.ordinal().rangeRoundBands([0, GRAPH_WIDTH], .1);
 		var normaliseY = d3.scale.linear().range([GRAPH_HEIGHT, 0]);
-		var normaliseRadius = d3.scale.linear().range([120, 5]);
+		var normaliseRadius = d3.scale.linear().range([100, 5]);
 		
 		normaliseX.domain(graphData.map(function(d){ return d.commitNo; }));
 		normaliseY.domain([0, 1]);
@@ -71,10 +95,40 @@ var BlobGraph = function() {
       	.attr("y", 6)
       	.attr("dy", ".71em")
       	.style("text-anchor", "end")
-      	.text("Frequency");	
+      	.text("Frequency");
+      	
+      	var rectangle = chart.selectAll(".rect")
+      	.data(splitGraphData[1])
+      	.enter().append("rect")
+      	.attr("class", "stones")
+		.attr("x",  function(d) {
+			return normaliseX(d.commitNo);
+		})
+        .attr("y", function(d) {
+			return -100;
+		})
+		.style("fill", function(d) {
+			return d.circle.color;
+		})
+		.attr("width", function(d) {
+			return safeRadius(d.circle.scl);
+		})
+		.attr("height", function(d) {
+			return safeRadius(d.circle.scl)/2;
+		})		
+		.on('click', function(d, i) {
+      		alert(d.hoverOn.title + "\n" + d.hoverOn.subtitle + "\n" + d.hoverOn.description);
+      	})
+		.transition()
+		.duration(300)
+		.ease("linear")
+		.attr("y", function(d) {
+			return safeY(normaliseY(d.circle.scl), safeRadius(d.circle.scl)/2);
+		});
+      		
     	
 		var barEnter = chart.selectAll(".circles")
-		.data(graphData)
+		.data(splitGraphData[0])
 		.enter().append("circle")
 		.attr("class", "blobs")
 		.attr("cx", function(d) {
@@ -100,8 +154,8 @@ var BlobGraph = function() {
 		});
 		
 		    	  
-    	var authors = chart.selectAll(".authors")
-    	.data(graphData)
+    	var goodAuthors = chart.selectAll(".authors")
+    	.data(splitGraphData[0])
     	.enter().append("text")
     	.attr("class", "label")
     	.attr("text-anchor", "middle")
@@ -113,6 +167,21 @@ var BlobGraph = function() {
 		})
 		.attr("y", function(d) {
 			return safeY(normaliseY(d.circle.scl), safeRadius(d.circle.scl));
+		});	
+		
+		 var badAuthors = chart.selectAll(".authors")
+    	.data(splitGraphData[1])
+    	.enter().append("text")
+    	.attr("class", "label")
+    	.attr("text-anchor", "middle")
+    	.text(function(d) {
+    		return d.hoverOn.title;
+    	})
+    	.attr("x", function(d) {
+			return normaliseX(d.commitNo) + safeRadius(d.circle.scl)/2;
+		})
+		.attr("y", function(d) {
+			return safeY(normaliseY(d.circle.scl), safeRadius(d.circle.scl)/4);
 		});	
 	};
 
