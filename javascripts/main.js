@@ -12,14 +12,6 @@ graphApp.config(['$routeProvider',
         templateUrl: 'partials/graphs.html',
         controller: 'blobGraphCtrl'
       }).
-      when('/graphVert', {
-        templateUrl: 'partials/graphs.html',
-        controller: 'vertGraphCtrl'
-      }).
-      when('/graphHor', {
-        templateUrl: 'partials/graphs.html',
-        controller: 'horGraphCtrl'
-      }).
       otherwise({
         redirectTo: '/blobGraph'
       });

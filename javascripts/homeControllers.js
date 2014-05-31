@@ -20,26 +20,4 @@ graphApp.controller('blobGraphCtrl', ['$scope', '$http',
 		});
 }]);
 
-
-
-graphApp.controller('vertGraphCtrl', ['$scope', '$http',
-	function($scope, $http) {
-		$http.get('data/graphData.json').success(function(data) {
-			var learningGraphVert = new LearningGraphVert();
- 
- 			learningGraphVert.costomiseMappings('filesChanged', 'insertions');
-    		learningGraphVert.generateGraph(d3, data);
-		});
-}]);
-
-graphApp.controller('horGraphCtrl', ['$scope', '$http',
-	function($scope, $http) {
-		$http.get('data/testData.json').success(function(data) {
-			var learningGraphHor = new LearningGraphHor();
- 
- 			learningGraphHor.costomiseMappings('title', 'testVal');
-    		learningGraphHor.generateGraph(d3, data);
-		});
-}]);
-
 console.log("homeControllers.js end"); 
