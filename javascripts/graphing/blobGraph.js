@@ -1,34 +1,19 @@
 console.log("BlobGraph ran");
 
 var BlobGraph = function() {
-
-	var xAxisKey;
-	var yAxisKey;
-
-	this.costomiseMappings = function(axisKeyX, axisKeyY) {
-		xAxisKey = axisKeyX;
-		yAxisKey = axisKeyY;
-	};
-
 	this.generateGraph = function(d3, data) {
-		var graphData = data.commits;
+		var graphData = data;
 		
 		var MARGIN = { top : 20, right : 30, bottom : 30, left: 40};
 		var GRAPH_HEIGHT = 500 - MARGIN.top - MARGIN.bottom;
-		var GRAPH_WIDTH = 800 - MARGIN.left - MARGIN.right;
-		var jsonData = data;
+		var GRAPH_WIDTH = 9999 - MARGIN.left - MARGIN.right;
 		
-		console.log("yAxisKey = " + yAxisKey);
-		
-		var maxInsertion = d3.max(graphData, function(d, index) {			
-			return d[yAxisKey];
-		});
-
 		var normaliseX = d3.scale.ordinal().rangeRoundBands([0, GRAPH_WIDTH], .1);
 		var normaliseY = d3.scale.linear().range([GRAPH_HEIGHT, 0]);
+		var normaliseRadius = d3.scale.linear().range([120, 5]);
 		
-		normaliseX.domain(graphData.map(function(d){ return d[xAxisKey];}));
-		normaliseY.domain([0, maxInsertion]);
+		normaliseX.domain(graphData.map(function(d){ return d.commitNo}));
+		normaliseY.domain([0, 1]);
 
 		console.log(normaliseY);
 		
@@ -39,7 +24,6 @@ var BlobGraph = function() {
 		var yAxis = d3.svg.axis();
     	yAxis.scale(normaliseY);
     	yAxis.orient("left");
-    	yAxis.ticks(10, "%");
 
 		//Note - This is actually the g object!
 		var chart = d3.select(".graphPlaceholder")
@@ -62,22 +46,43 @@ var BlobGraph = function() {
       	.attr("y", 6)
       	.attr("dy", ".71em")
       	.style("text-anchor", "end")
-      	.text("Frequency");
-    	    		
+      	.text("Frequency");	
+    	
 		var barEnter = chart.selectAll(".circles")
 		.data(graphData)
 		.enter().append("circle")
-		.attr("class", "bar")
+		.attr("class", "blobs")
 		.attr("cx", function(d) {
-			return normaliseX(d[xAxisKey]);
+			return normaliseX(d.commitNo);
 		})
 		.attr("cy", function(d) {
-			return normaliseY(d[yAxisKey]);
+			return normaliseY(d.circle.scl);
 		})
 		.attr("width", normaliseX.rangeBand() )
 		.attr("r", function(d) {
-			return normaliseY(d[yAxisKey])*0.1;
-		});
+			return normaliseRadius(d.circle.scl);
+		})
+		.style("fill", function(d) {
+			return d.circle.color;
+		})
+		.on('click', function(d, i) {
+      		alert(d.hoverOn.title + "\n" + d.hoverOn.subtitle + "\n" + d.hoverOn.description);
+      	});
+		
+		    	  
+    	var authors = chart.selectAll(".authors")
+    	.data(graphData)
+    	.attr("class", "label")
+    	.enter().append("text")
+    	.text(function(d) {
+    		return d.hoverOn.title;
+    	})
+    	.attr("x", function(d) {
+			return normaliseX(d.commitNo);
+		})
+		.attr("y", function(d) {
+			return normaliseY(d.circle.scl);
+		});	
 	};
 
 	var jsonObjectToArray = function(jsonObjectArray, key) {

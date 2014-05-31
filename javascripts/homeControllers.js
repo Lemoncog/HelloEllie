@@ -14,10 +14,8 @@ graphApp.controller('HeaderCtrl', function($scope, $location, $http) {
 
 graphApp.controller('blobGraphCtrl', ['$scope', '$http',
 	function($scope, $http) {
-		$http.get('data/testData.json').success(function(data) {
+		$http.get('data/graphData.json').success(function(data) {
 			var blobGraph = new BlobGraph();
- 
- 			blobGraph.costomiseMappings('title', 'testVal');
     		blobGraph.generateGraph(d3, data);
 		});
 }]);
@@ -26,7 +24,7 @@ graphApp.controller('blobGraphCtrl', ['$scope', '$http',
 
 graphApp.controller('vertGraphCtrl', ['$scope', '$http',
 	function($scope, $http) {
-		$http.get('data/commitLog.json').success(function(data) {
+		$http.get('data/graphData.json').success(function(data) {
 			var learningGraphVert = new LearningGraphVert();
  
  			learningGraphVert.costomiseMappings('filesChanged', 'insertions');
