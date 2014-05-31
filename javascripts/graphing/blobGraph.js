@@ -81,18 +81,23 @@ var BlobGraph = function() {
 			return normaliseX(d.commitNo);
 		})
 		.attr("cy", function(d) {
-			return safeY(normaliseY(d.circle.scl), safeRadius(d.circle.scl));
-		})
-		//.attr("width", normaliseX.rangeBand() )
-		.attr("r", function(d) {
-			return safeRadius(d.circle.scl);
+			return -100;
 		})
 		.style("fill", function(d) {
 			return d.circle.color;
 		})
 		.on('click', function(d, i) {
       		alert(d.hoverOn.title + "\n" + d.hoverOn.subtitle + "\n" + d.hoverOn.description);
-      	});
+      	})
+		.attr("r", function(d) {
+			return safeRadius(d.circle.scl);
+		})
+		.transition()
+		.duration(2000)
+		.ease("elastic")
+		.attr("cy", function(d) {
+			return safeY(normaliseY(d.circle.scl), safeRadius(d.circle.scl));
+		});
 		
 		    	  
     	var authors = chart.selectAll(".authors")
