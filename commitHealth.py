@@ -45,8 +45,9 @@ class Circle:
 		return self.__dict__
 
 class GraphPoint:
-	def __init__(self, commitNo, circle, hoverOn):
+	def __init__(self, commitNo, author, circle, hoverOn):
 		self.commitNo = commitNo
+		self.author = author
 		self.circle = circle
 		self.hoverOn = hoverOn
 
@@ -123,11 +124,13 @@ def buildGraphData(root):
 	for commit in commits:
 		mergedHealth = commit["insertions"] + commit["deletions"] + commit["filesChanged"]
 		author = commit["author"]
+		date = commit["date"]
+		description = "Insertions: {}\nDeletions: {}\nFiles Changed: {}".format(commit["insertions"], commit["deletions"], commit["filesChanged"])
 
 		commitHealth = 1-(float(mergedHealth)/float(maxCommit)) * 10.0
 		commitNo+=1
 
-		graphPoint = GraphPoint(commitNo, Circle(commitHealth, commitHealth, colorFor(author)), HoverOn(author, author, author))
+		graphPoint = GraphPoint(commitNo, author, Circle(commitHealth, commitHealth, colorFor(author)), HoverOn(author, date, description))
 
 		print "mergedHealth {} maxCommit {} commit health {}".format(mergedHealth, maxCommit, commitHealth)
 
