@@ -34,12 +34,12 @@ var BlobGraph = function() {
 		
 		var normaliseX = d3.scale.ordinal().rangeRoundBands([0, GRAPH_WIDTH], .1);
 		var normaliseY = d3.scale.linear().range([GRAPH_HEIGHT, 0]);
-		var normaliseRadius = d3.scale.linear().range([100, 5]);
+		var normaliseRadius = d3.scale.linear().range([100, 15]);
 		
 		normaliseX.domain(graphData.map(function(d){ return d.commitNo; }));
 		normaliseY.domain([0, 1]);
 		
-		var safeRadius = function(scl){
+		var safeRadius = function(scl) {
 			scaledRadius = normaliseRadius(scl);
 			
 			if(scaledRadius > 150) {
@@ -50,7 +50,7 @@ var BlobGraph = function() {
 			return scaledRadius;
 		};
 		
-		var safeY = function(y, diameter){
+		var safeY = function(y, diameter) {
 			graphBot = normaliseY(0);
 			yPos = y - (diameter/2);
 			bottom = yPos + diameter;
@@ -91,7 +91,7 @@ var BlobGraph = function() {
       	.append("text")
       	.text("Health")
       	.append("text")
-      	.attr("transform", "rotate(-90)")
+      	.attr("transform", "rotate(-170)")
       	.attr("y", 6)
       	.attr("dy", ".71em")
       	.style("text-anchor", "end")
