@@ -54,12 +54,20 @@ var BlobGraph = function() {
 			graphBot = normaliseY(0);
 			yPos = y - (diameter/2);
 			bottom = yPos + diameter;
+			top = yPos;
+			
+			penetration = top;
+			if(top < 0)
+			{
+				yPos = yPos + penetration;
+			}
 			
 			penetration = bottom - graphBot;
 									
 			if(penetration > 0) {
 				yPos = yPos - penetration;
 			}
+			
 			
 			return yPos;
 		};
@@ -140,6 +148,7 @@ var BlobGraph = function() {
 		.style("fill", function(d) {
 			return d.circle.color;
 		})
+		.style("opacity", "0.7")
 		.on('click', function(d, i) {
       		alert(d.hoverOn.title + "\n" + d.hoverOn.subtitle + "\n" + d.hoverOn.description);
       	})

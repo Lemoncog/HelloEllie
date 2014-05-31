@@ -127,7 +127,7 @@ def buildGraphData(root):
 		date = commit["date"]
 		description = "Insertions: {}\nDeletions: {}\nFiles Changed: {}".format(commit["insertions"], commit["deletions"], commit["filesChanged"])
 
-		commitHealth = 1-(float(mergedHealth)/float(maxCommit)) * 10.0
+		commitHealth = 1-(float(mergedHealth)/float(maxCommit))# * 10.0
 		commitNo+=1
 
 		graphPoint = GraphPoint(commitNo, author, Circle(commitHealth, commitHealth, colorFor(author)), HoverOn(author, date, description))
