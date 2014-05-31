@@ -54,12 +54,17 @@ var BlobGraph = function() {
 			graphBot = normaliseY(0);
 			yPos = y - (diameter/2);
 			bottom = yPos + diameter;
-			top = yPos;
+			graphTop = normaliseY(1);
 			
-			penetration = top;
-			if(top < 0)
+			console.log(yPos);
+			
+			penetration = yPos;
+			if(penetration < 0)
 			{
-				yPos = yPos + penetration;
+				yPos = yPos - penetration;
+				console.log(y);
+				console.log(penetration);
+				console.log(yPos);
 			}
 			
 			penetration = bottom - graphBot;
